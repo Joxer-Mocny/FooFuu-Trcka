@@ -1,17 +1,31 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.example.engine.*;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Entry point of the application.
+ * Initializes rules, output mechanism, and triggers the processing logic.
+ */
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        // Define the range of numbers to process
+        int from = 1;
+        int to = 100;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        // Define transformation rules (e.g., divisibility)
+        List<Rule> rules = Arrays.asList(
+                new DivisibleRule(2, "foo"), // replace if divisible by 2
+                new DivisibleRule(4, "fuu")  // replace if divisible by 4
+        );
+
+        // Output strategy (currently printing to console)
+        Output output = new ConsoleOutput();
+
+        // Process numbers using defined rules and output
+        NumberProcessor processor = new NumberProcessor(from, to, rules, output);
+        processor.run();
     }
 }
